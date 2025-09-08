@@ -49,7 +49,7 @@ class AuthController extends Controller
             return response()->json([
                 'message' => $data['message'],
                 'success' => false,
-            ]);
+            ], 401);
         }
 
         return response()->json([
@@ -58,18 +58,18 @@ class AuthController extends Controller
             'access_token' => $data['access_token'],
             'token_type' => $data['token_type'],
             'success' => true,
-        ]);
+        ], 200);
     }
 
     public function profile(Request $request)
     {
-        return response()->json($request->user());
+        return response()->json($request->user(), 200);
     }
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Logout efetuado com sucesso']);
+        return response()->json(['message' => 'Logout efetuado com sucesso'], 200);
     }
 }
