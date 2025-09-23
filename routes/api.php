@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Produto\ProdutoController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -15,4 +16,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/perfil', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::prefix("produto")->group(
+        function () {
+            Route::post('/criar', [ProdutoController::class, 'store']);
+            Route::get('/listar', [ProdutoController::class, 'index']);
+            Route::get('/listar/{id}', [ProdutoController::class, 'show']);
+            Route::delete('/deletar/{id}', [ProdutoController::class, 'destroy']);
+        }
+    );
 });
