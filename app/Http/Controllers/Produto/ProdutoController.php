@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Produto;
 
 use RuntimeException;
-use Illuminate\Http\Request;
 use App\Services\ProdutoService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProdutoRequest;
 
 class ProdutoController extends Controller
 {
@@ -17,9 +17,6 @@ class ProdutoController extends Controller
         $this->produtoService = $produtoService;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $produtos = $this->produtoService->listarProdutos();
@@ -37,17 +34,9 @@ class ProdutoController extends Controller
         ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(ProdutoRequest $request)
     {
-        $validatedProduct = $request->validate([
-            "descricao" => 'required|string|max:1000',
-            "categoria_id" => 'required|exists:categorias_produto,id',
-            "preco_custo" => 'required|numeric|decimal:0,2',
-            "preco_venda" => 'required|numeric|decimal:0,2',
-        ]);
+        $validatedProduct = $request->validated();
 
         try {
             $product = $this->produtoService->criarProduto($validatedProduct);
@@ -64,9 +53,6 @@ class ProdutoController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(int $id)
     {
         $produto = $this->produtoService->listarProduto($id);
@@ -84,17 +70,24 @@ class ProdutoController extends Controller
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, int $id)
+    public function update(ProdutoRequest $request, int $id)
     {
-        //
+        $validatedProduct = $request->validated();
+        $produto = $this->produtoService->editarProduto($id, $validatedProduct);
+
+        if (!$produto) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Produto não encontrado'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'produto' => $produto
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $id)
     {
         $deleted = $this->produtoService->deletarProduto($id);
