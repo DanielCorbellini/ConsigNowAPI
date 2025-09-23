@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/listar', [ProdutoController::class, 'index']);
             Route::get('/listar/{id}', [ProdutoController::class, 'show']);
             Route::delete('/deletar/{id}', [ProdutoController::class, 'destroy']);
+            Route::put('/editar/{id}', [ProdutoController::class, 'update']);
         }
     );
 });

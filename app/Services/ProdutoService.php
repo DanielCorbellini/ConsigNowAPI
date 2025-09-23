@@ -33,4 +33,16 @@ class ProdutoService
     {
         return Produto::destroy($id) > 0;
     }
+
+    public function editarProduto(int $id, array $data): ?Produto
+    {
+        $produto = Produto::find($id);
+
+        if (!$produto)
+            return null;
+
+        $produto->update($data);
+
+        return $this->baseSearchQuery()->find($id);
+    }
 }
