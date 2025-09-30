@@ -44,7 +44,7 @@ class ProdutoController extends Controller
                 "message" => "Produto cadastrado com sucesso",
                 "produto" => $product,
                 "success" => true
-            ], 200);
+            ], 201);
         } catch (RuntimeException $e) {
             return response()->json([
                 "message" => $e->getMessage(),

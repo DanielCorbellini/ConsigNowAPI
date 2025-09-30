@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Produto\ProdutoController;
+use App\Http\Controllers\Condicional\CondicionalController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,6 +25,17 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/listar/{id}', [ProdutoController::class, 'show']);
             Route::delete('/deletar/{id}', [ProdutoController::class, 'destroy']);
             Route::put('/editar/{id}', [ProdutoController::class, 'update']);
+        }
+    );
+
+    Route::prefix("condicional")->group(
+        function () {
+            Route::post('/criar', [CondicionalController::class, 'store']);
+            Route::get('/listar', [CondicionalController::class, 'index']);
+            Route::get('/listar/{id}', [CondicionalController::class, 'show']);
+            Route::delete('/deletar/{id}', [CondicionalController::class, 'destroy']);
+            Route::put('/editar/{id}', [CondicionalController::class, 'update']);
+            // Route::put('/finalizar/{id}', [CondicionalController::class, 'update']);
         }
     );
 });
