@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Condicional extends Model
 {
@@ -18,9 +19,14 @@ class Condicional extends Model
 
     protected $table = "condicionais";
 
-    public function representante()
+    public function representante(): BelongsTo
     {
         return $this->belongsTo(Representante::class, "representante_id");
+    }
+
+    public function itens(): HasMany
+    {
+        return $this->hasMany(CondicionalItem::class, "condicional_id");
     }
 
     /**

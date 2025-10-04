@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('quantidade_devolvida')->default(0);
             $table->integer('quantidade_vendida')->default(0);
             $table->timestamps();
+
+            $table->unique(['condicional_id', 'produto_id']);
         });
     }
 
