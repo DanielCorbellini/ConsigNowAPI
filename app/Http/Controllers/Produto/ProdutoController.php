@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Produto;
 use RuntimeException;
 use App\Services\ProdutoService;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProdutoRequest;
+use App\Http\Requests\Produto\ProdutoRequest;
 
 class ProdutoController extends Controller
 {
