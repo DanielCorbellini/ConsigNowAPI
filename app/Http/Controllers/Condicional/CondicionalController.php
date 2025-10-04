@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\CondicionalService;
 use App\Http\Requests\Condicional\CondicionalIndexRequest;
+use App\Http\Requests\condicional\CondicionalItemStore;
 use App\Http\Requests\Condicional\CondicionalStoreRequest;
 use App\Http\Requests\Condicional\CondicionalUpdateRequest;
 
@@ -120,5 +121,21 @@ class CondicionalController extends Controller
             'success' => true,
             'message' => 'Condicional deletada com sucesso!'
         ], 200);
+    }
+
+    public function addItem(CondicionalItemStore $request, $id)
+    {
+        try {
+            $condicional = $this->condicionalService->adicionarItem($id, $request->validated());
+
+            return response()->json([
+                'message' => 'Item adicionado com sucesso!',
+                'condicional' => $condicional
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 400);
+        }
     }
 }
