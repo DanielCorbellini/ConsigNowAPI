@@ -20,22 +20,24 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix("produto")->group(
         function () {
-            Route::post('/criar', [ProdutoController::class, 'store']);
-            Route::get('/listar', [ProdutoController::class, 'index']);
-            Route::get('/listar/{id}', [ProdutoController::class, 'show']);
-            Route::delete('/deletar/{id}', [ProdutoController::class, 'destroy']);
-            Route::put('/editar/{id}', [ProdutoController::class, 'update']);
+            Route::post('/', [ProdutoController::class, 'store']);
+            Route::get('/', [ProdutoController::class, 'index']);
+            Route::get('/{id}', [ProdutoController::class, 'show']);
+            Route::delete('/{id}', [ProdutoController::class, 'destroy']);
+            Route::put('/{id}', [ProdutoController::class, 'update']);
         }
     );
 
     Route::prefix("condicional")->group(
         function () {
-            Route::post('/criar', [CondicionalController::class, 'store']);
-            Route::get('/listar', [CondicionalController::class, 'index']);
-            Route::get('/listar/{id}', [CondicionalController::class, 'show']);
-            Route::delete('/deletar/{id}', [CondicionalController::class, 'destroy']);
-            Route::put('/editar/{id}', [CondicionalController::class, 'update']);
-            // Route::put('/finalizar/{id}', [CondicionalController::class, 'update']);
+            Route::post('/', [CondicionalController::class, 'store']);
+            Route::get('/', [CondicionalController::class, 'index']);
+            Route::get('/{id}', [CondicionalController::class, 'show']);
+            Route::delete('/{id}', [CondicionalController::class, 'destroy']);
+            Route::put('/{id}', [CondicionalController::class, 'update']);
+
+            // Itens da condicional
+            Route::post('/{id}/itens/', [CondicionalController::class, 'addItem']);
         }
     );
 });
